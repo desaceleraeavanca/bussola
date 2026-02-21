@@ -85,7 +85,7 @@ export default function Settings() {
                     <p className="text-sm text-secondary" style={{ lineHeight: 1.6 }}>
                         A Bússola do Caos é baseada no livro de produtividade caótica.
                         O método combina o Ritual da Bússola (priorização diária),
-                        análise 80/20 e o ciclo TAE (Teste-Ajuste-Escala) para
+                        análise 80/20 e o ciclo TAE (Teste-Ajuste-Escale) para
                         navegação produtiva no caos.
                     </p>
                     <button className="btn btn-secondary btn-sm btn-block mt-3">

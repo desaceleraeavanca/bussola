@@ -117,7 +117,7 @@ export default function Experiments() {
         const map: Record<string, { label: string; className: string; color: string }> = {
             teste: { label: 'Teste', className: 'badge-warning', color: 'rgba(245,158,11,0.18)' },
             ajuste: { label: 'Ajuste', className: 'badge-info', color: 'rgba(59,130,246,0.18)' },
-            escala: { label: 'Escala', className: 'badge-success', color: 'rgba(34,197,94,0.18)' },
+            escala: { label: 'Escale', className: 'badge-success', color: 'rgba(34,197,94,0.18)' },
         };
         return map[fase] || { label: fase, className: 'badge-gold', color: 'transparent' };
     };
@@ -126,7 +126,7 @@ export default function Experiments() {
         const map: Record<string, { label: string; color: string; textColor: string }> = {
             teste: { label: 'Teste', color: 'rgba(245,158,11,0.15)', textColor: '#f59e0b' },
             ajuste: { label: 'Ajuste', color: 'rgba(59,130,246,0.15)', textColor: '#60a5fa' },
-            escala: { label: 'Escala', color: 'rgba(34,197,94,0.15)', textColor: '#4ade80' },
+            escala: { label: 'Escale', color: 'rgba(34,197,94,0.15)', textColor: '#4ade80' },
         };
         return map[fase || ''] || { label: '', color: 'transparent', textColor: 'var(--text-muted)' };
     };
@@ -159,7 +159,7 @@ export default function Experiments() {
                 <div className="flex items-center justify-between mb-6">
                     <div>
                         <h2 style={{ fontSize: '1.25rem', fontWeight: 700 }}>Seus Experimentos</h2>
-                        <p className="text-secondary text-xs mt-1">Método TAE: Teste → Ajuste → Escala</p>
+                        <p className="text-secondary text-xs mt-1">Método TAE: Teste → Ajuste → Escale</p>
                     </div>
                     {canAddMore && (
                         <button className="btn btn-primary btn-sm" onClick={() => setShowForm(true)}>
