@@ -3,7 +3,7 @@ import { Trash2 } from 'lucide-react';
 import { useState } from 'react';
 
 export default function Settings() {
-    const { user, getTrialDaysLeft, setCurrentPage } = useApp();
+    const { user, getTrialDaysLeft, setCurrentPage, updateUser } = useApp();
     const [showConfirm, setShowConfirm] = useState(false);
     const trialDays = getTrialDaysLeft();
 
@@ -55,6 +55,74 @@ export default function Settings() {
                     </div>
                 </div>
 
+                {/* DEV CONTROLS */}
+                <div className="card mb-4" style={{ borderColor: 'rgba(168,85,247,0.3)', backgroundColor: 'rgba(168,85,247,0.05)' }}>
+                    <div className="section-header mb-3">
+                        <span className="section-icon">🛠️</span>
+                        <span className="section-title text-accent">DEV CONTROLS</span>
+                    </div>
+                    <div className="flex gap-2">
+                        <button
+                            className="btn btn-ghost btn-sm"
+                            style={{ flex: 1, fontSize: '0.7rem' }}
+                            onClick={() => {
+                                const past = new Date();
+                                past.setDate(past.getDate() - 10);
+                                updateUser({ subscription: 'free', trialEndsAt: past.toISOString() });
+                            }}
+                        >
+                            Gratuito (expirado)
+                        </button>
+                        <button
+                            className="btn btn-ghost btn-sm"
+                            style={{ flex: 1, fontSize: '0.7rem' }}
+                            onClick={() => {
+                                const future = new Date();
+                                future.setDate(future.getDate() + 7);
+                                updateUser({ subscription: 'free', trialEndsAt: future.toISOString() });
+                            }}
+                        >
+                            Gratuito (7 dias)
+                        </button>
+                        <button
+                            className="btn btn-primary btn-sm"
+                            style={{ flex: 1, fontSize: '0.7rem', background: 'rgba(234, 179, 8, 0.2)', color: '#eab308' }}
+                            onClick={() => {
+                                updateUser({ subscription: 'premium' });
+                            }}
+                        >
+                            Premium Ativo
+                        </button>
+                    </div>
+                </div>
+
+                {/* Limites da Conta */}
+                {user.subscription === 'free' && (
+                    <div className="card mb-4" style={{ backgroundColor: 'rgba(17, 24, 39, 0.4)' }}>
+                        <div className="section-header mb-3">
+                            <span className="section-icon">🆓</span>
+                            <span className="section-title">VERSÃO GRATUITA (7 dias)</span>
+                        </div>
+                        <div className="flex flex-col gap-2">
+                            <div className="flex items-center gap-2 text-sm text-secondary">
+                                <span className="text-success">✅</span> Check-in matinal e noturno
+                            </div>
+                            <div className="flex items-center gap-2 text-sm text-secondary">
+                                <span className="text-success">✅</span> Dashboard de prioridades
+                            </div>
+                            <div className="flex items-center gap-2 text-sm text-secondary">
+                                <span className="text-success">✅</span> Gráfico de energia (7 dias)
+                            </div>
+                            <div className="flex items-center gap-2 text-sm text-secondary">
+                                <span className="text-success">✅</span> 1 experimento TAE ativo
+                            </div>
+                            <div className="flex items-center gap-2 text-sm text-secondary">
+                                <span className="text-success">✅</span> Insights básicos
+                            </div>
+                        </div>
+                    </div>
+                )}
+
                 {/* Upgrade */}
                 {user.subscription === 'free' && (
                     <div className="card card-glow mb-4" style={{ textAlign: 'center', padding: 24 }}>
@@ -63,7 +131,7 @@ export default function Settings() {
                             Assine o Premium
                         </h3>
                         <p className="text-sm text-secondary mt-2 mb-4" style={{ lineHeight: 1.6 }}>
-                            Histórico ilimitado, experimentos ilimitados, alertas de burnout, e muito mais.
+                            Desbloqueie todo o poder da bússola: gráfico 80/20 completo com 30 dias de histórico, infinitos experimentos TAE, predição de burnout avançada e mais.
                         </p>
                         <div className="flex flex-col gap-2">
                             <button className="btn btn-primary btn-block">

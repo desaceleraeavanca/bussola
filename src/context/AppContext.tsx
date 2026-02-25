@@ -34,11 +34,13 @@ interface AppContextValue extends AppState {
     editPriority: (checkinId: string, priorityId: string, newText: string) => void;
     addPriority: (checkinId: string, text: string) => void;
     removePriority: (checkinId: string, priorityId: string) => void;
+    reorderPriorities: (checkinId: string, startIndex: number, endIndex: number) => void;
     addExperiment: (experiment: Omit<Experiment, 'id' | 'userId' | 'createdAt' | 'anotacoes'>) => void;
     updateExperiment: (id: string, updates: Partial<Experiment>) => void;
     removeExperiment: (id: string) => void;
     getTrialDaysLeft: () => number;
     isPremium: () => boolean;
+    updateUser: (updates: Partial<User>) => void;
 }
 
 const AppContext = createContext<AppContextValue | null>(null);
@@ -164,6 +166,19 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         }));
     }, []);
 
+    const reorderPriorities = useCallback((checkinId: string, startIndex: number, endIndex: number) => {
+        setState(prev => ({
+            ...prev,
+            checkins: prev.checkins.map(c => {
+                if (c.id !== checkinId) return c;
+                const result = Array.from(c.prioridades);
+                const [removed] = result.splice(startIndex, 1);
+                result.splice(endIndex, 0, removed);
+                return { ...c, prioridades: result };
+            }),
+        }));
+    }, []);
+
     const addExperiment = useCallback((experiment: Omit<Experiment, 'id' | 'userId' | 'createdAt' | 'anotacoes'>) => {
         setState(prev => ({
             ...prev,
@@ -201,6 +216,13 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         return state.user.subscription === 'premium' || getTrialDaysLeft() > 0;
     }, [state.user.subscription, getTrialDaysLeft]);
 
+    const updateUser = useCallback((updates: Partial<User>) => {
+        setState(prev => ({
+            ...prev,
+            user: { ...prev.user, ...updates }
+        }));
+    }, []);
+
     const value: AppContextValue = {
         ...state,
         setCurrentPage,
@@ -212,11 +234,13 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         editPriority,
         addPriority,
         removePriority,
+        reorderPriorities,
         addExperiment,
         updateExperiment,
         removeExperiment,
         getTrialDaysLeft,
         isPremium,
+        updateUser,
     };
 
     return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

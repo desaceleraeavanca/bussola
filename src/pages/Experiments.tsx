@@ -404,18 +404,40 @@ export default function Experiments() {
                         <div className="card text-center text-muted text-sm" style={{ padding: 24 }}>
                             {canAddMore
                                 ? 'Nenhum experimento em andamento. Crie seu primeiro!'
-                                : '🔒 Limite gratuito: 1 experimento ativo. Assine Premium para mais.'}
+                                : 'Você já possui 1 experimento ativo. Foco total nela agora!'}
                         </div>
                     )}
                 </div>
 
                 {/* Premium upsell if at limit */}
                 {!canAddMore && (
-                    <div className="alert alert-warning mb-6">
-                        💎 <strong>Premium:</strong> Experimentos TAE ilimitados + análise de padrões.{' '}
-                        <button className="btn btn-ghost btn-sm text-accent" style={{ padding: '2px 8px', display: 'inline' }}>
-                            Assinar agora
-                        </button>
+                    <div className="premium-gate mb-6">
+                        <div className="card experiment-card flex flex-col justify-center" style={{ padding: '16px', opacity: 0.3, filter: 'blur(3px)', pointerEvents: 'none', minHeight: 170 }}>
+                            <div className="flex items-start justify-between gap-2 mb-1">
+                                <span className="experiment-name" style={{ lineHeight: 1.3 }}>Estratégia Oculta #X</span>
+                                <span className="badge badge-gold">Bloqueado</span>
+                            </div>
+                            <p className="text-xs text-muted" style={{ lineHeight: 1.4, marginBottom: 12 }}>
+                                Conduza múltiplos experimentos simultâneos para entender as variáveis do seu caos.
+                            </p>
+                            <div className="progress-bar" style={{ margin: 0 }}>
+                                <div className="progress-bar-fill" style={{ width: '40%' }} />
+                            </div>
+                        </div>
+                        <div className="premium-gate-overlay">
+                            <p className="text-sm font-semibold flex items-center gap-2">
+                                🔒 LIMITE ATINGIDO
+                            </p>
+                            <p className="text-xs text-secondary mt-1 mb-3" style={{ maxWidth: 280, textAlign: 'center', lineHeight: 1.4 }}>
+                                Empreendedores Premium rodam <strong>múltiplos experimentos</strong> ao mesmo tempo. Desbloqueie TAEs simultâneos e ilimitados.
+                            </p>
+                            <button
+                                className="btn btn-primary btn-sm"
+                                onClick={() => setCurrentPage('settings')}
+                            >
+                                Desbloquear Ilimitados 💎
+                            </button>
+                        </div>
                     </div>
                 )}
 

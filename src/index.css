@@ -475,6 +475,11 @@ textarea.input {
 .option-card:hover {
   border-color: var(--border-hover);
   background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-2px);
+}
+
+.option-card:active {
+  transform: scale(0.97);
 }
 
 .option-card.selected {
@@ -576,10 +581,15 @@ textarea.input {
   transition: all var(--transition-fast);
 }
 
+.priority-item:active {
+  transform: scale(0.98);
+}
+
 .priority-item.completed .priority-check {
   background: var(--success);
   border-color: var(--success);
   color: white;
+  animation: checkboxPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .priority-item .priority-text {
@@ -742,6 +752,20 @@ textarea.input {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes checkboxPop {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
   }
 }
 
